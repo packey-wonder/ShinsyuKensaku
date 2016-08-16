@@ -1,0 +1,26 @@
+﻿@model IEnumerable<ShinsyuKensaku.Models.Books>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                <table>
+                   <tr><td>【@Html.DisplayFor(modelItem => item.title)】 @Html.DisplayFor(modelItem => item.heading) </td></tr>
+                   <tr><td>@Html.DisplayFor(modelItem => item.digest)... @Html.ActionLink("全文を読む", "Details", new { id = item.id })  </td></tr>
+                </table>
+                </td>
+        </tr>
+    }
+
+    </table>

@@ -22,8 +22,9 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("お言葉検索", "Index", "BookSearch")</li>
-                    <li>@Html.ActionLink("当サイトについて", "About", "Home")</li>
+                    @*<li>@Html.ActionLink("お言葉検索", "Index", "BookSearch")</li>*@
+                    <li>@Html.ActionLink("お言葉検索", "Index", "Books1")</li>
+                 <li>@Html.ActionLink("当サイトについて", "About", "Home")</li>
                     <li>@Html.ActionLink("連絡先", "Contact", "Home")</li>
                 </ul>
                 @Html.Partial("_LoginPartial")

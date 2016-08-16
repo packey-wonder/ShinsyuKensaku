@@ -20,6 +20,9 @@ namespace ShinsyuKensaku.Models
         [StringLength(200)]
         public string heading { get; set; }
 
+        [StringLength(200)]
+        public string digest { get; set; }
+
         public string body { get; set; }
 
         [StringLength(100)]
