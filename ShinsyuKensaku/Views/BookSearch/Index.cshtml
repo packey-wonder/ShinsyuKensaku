@@ -1,37 +1,39 @@
 ﻿@model IEnumerable<ShinsyuKensaku.Models.Books>
 
 @{
-    ViewBag.Title = "Book Search Page";
+    ViewBag.Title = "Index";
 }
+
 @using Microsoft.AspNet.Identity
+
+@*ログイン済みの時は、検索機能を表示する*@
 @if (Request.IsAuthenticated)
 {
-
-    <div class="row">
-        <div class="col-md-4">
-            <h2>検索結果を表示します。</h2>
-            <table>
-                @foreach (var item in Model)
-                {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.title)
-                        </td>
-                        <td>
-                            @item.title
-                        </td>
-                        <td>
-                            @item.body
-                        </td>
-                    </tr>
-                }
-            </table>
-        </div>
-        @{ 
-            Layout = "~/Views/BookSearch/SearchResult.cshtml";
+    using (Html.BeginForm("Index","BookSearch",FormMethod.Get,new { @class="form-inline"}))
+    {
+        @Html.AntiForgeryToken()
+        <div><br />
+        @Html.Label("keyword", "検索語句：", new { @class = "control-label" }) @Html.TextBox("keyword", null, new { @class = "form-control" }) <input type="submit" value="検索" 　class="btn btn-info" /> 
+        </div> 
         }
-    </div>
+    <p>検索件数：</p>
+    <table class="table">
 
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <table>
+                        <tr><td>【@Html.DisplayFor(modelItem => item.title)】 @Html.DisplayFor(modelItem => item.heading) </td></tr>
+                        <tr><td>@Html.DisplayFor(modelItem => item.digest)... @Html.ActionLink("全文を読む", "Details", new { id = item.id })  </td></tr>
+                    </table>
+                </td>
+            </tr>
+        }
+
+    </table>
+
+    @*@Html.Partial("_SearchPartial",Model)*@
 }
 else
 {
@@ -40,26 +42,6 @@ else
         <h1>検索の使用にはログインが必要です。</h1>
         <p class="lead">「浄土真宗のお言葉検索」の使用にはログインが必要です。</p>
         <p>右上から、ログインして使用してください。</p>
-    </div>
+        <p>登録がまだの場合は登録してください。</p>
+   </div>
 }
-@*<div class="row">
-        <div class="col-md-4">
-            <h2>Getting started</h2>
-            <p>
-                ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-                enables a clean separation of concerns and gives you full control over markup
-                for enjoyable, agile development.
-            </p>
-            <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-        </div>
-        <div class="col-md-4">
-            <h2>Get more libraries</h2>
-            <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-            <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-        </div>
-        <div class="col-md-4">
-            <h2>Web Hosting</h2>
-            <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-            <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-        </div>
-    </div>*@

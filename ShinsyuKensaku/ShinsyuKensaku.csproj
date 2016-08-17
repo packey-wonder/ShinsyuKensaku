@@ -254,9 +254,12 @@
     <Content Include="Views\BookSearch\Index.cshtml" />
     <Content Include="Views\Books1\Details.cshtml" />
     <Content Include="Views\Books1\Index.cshtml" />
+    <Content Include="Views\BookSearch\_SearchPartial.cshtml" />
+    <Content Include="Views\BookSearch\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Link\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
