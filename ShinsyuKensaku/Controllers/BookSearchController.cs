@@ -15,53 +15,68 @@ namespace ShinsyuKensaku.Controllers
         private BooksModel db = new BooksModel();
 
         // GET: Books1
-        //public ActionResult Index()
-        //{
-        //    // SQL version of the above LINQ code.
-        //    string query = "SELECT id "
-        //    + ",seq "
-        //    + ",title "
-        //    + ",heading "
-        //    + ",LEFT(body,200) as digest "
-        //    + ",body "
-        //    + ",link "
-        //    + ",division "
-        //+ " FROM Books";
-        //    IEnumerable<Books> data = db.Database.SqlQuery<Books>(query);
-
-        //    return View(data.ToList());
-        //}
-
-        // GET: Books1
         //[ChildActionOnly]
         public ActionResult Index(string keyword)
         {
-            // SQL version of the above LINQ code.
-            string query = "SELECT id "
-            + ",seq "
-            + ",title "
-            + ",heading "
-            + ",LEFT(body,200) as digest "
-            + ",body "
-            + ",link "
-            + ",division "
-            + " FROM Books"
-            + " WHERE body like N'%"
-            + keyword
-            + "%'";
+            string query = "";
+
+            if (keyword==null || keyword.Trim()=="")
+            {
+                ViewBag.Keyword = "";
+
+                // SQL version of the above LINQ code.
+                query = "SELECT id "
+                + ",seq "
+                + ",title "
+                + ",heading "
+                + ",LEFT(body,200) as digest "
+                + ",body "
+                + ",link "
+                + ",division "
+                + " FROM Books"
+                + " WHERE id = 0";
+            }
+            else
+            { 
+
+                ViewBag.Keyword = keyword;
+
+                // SQL version of the above LINQ code.
+                query = "SELECT id "
+                + ",seq "
+                + ",title "
+                + ",heading "
+                + ",LEFT(body,200) as digest "
+                + ",body "
+                + ",link "
+                + ",division "
+                + " FROM Books"
+                + " WHERE body like N'%"
+                + keyword
+                + "%' "
+                +" OR heading like N'%"
+                + keyword
+                + "%' ";
+            
+                
+            }
+
             IEnumerable<Books> data = db.Database.SqlQuery<Books>(query);
+            ViewBag.Count = data.Count().ToString();
 
             //return PartialView("_SearchPartial", data.ToList());
             return View(data.ToList());
         }
 
         // GET: Books1/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Details(int? id,String keyword)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            ViewBag.Keyword = keyword;
+
             string query = "SELECT id "
             + ",seq "
             + ",title "

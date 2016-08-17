@@ -13,25 +13,34 @@
     {
         @Html.AntiForgeryToken()
         <div><br />
-        @Html.Label("keyword", "検索語句：", new { @class = "control-label" }) @Html.TextBox("keyword", null, new { @class = "form-control" }) <input type="submit" value="検索" 　class="btn btn-info" /> 
-        </div> 
-        }
-    <p>検索件数：</p>
-    <table class="table">
+            @if (ViewBag.keyword == "")
+            {
+                @Html.Label("keyword", "検索語句：", new { @class = "control-label" }) @Html.TextBox("keyword", null, new { @class = "form-control" }) <input type="submit" value="検索" 　class="btn btn-info" />
+                <div style="height:300px"></div>
+            }
+            else
+            {
+                @Html.Label("keyword", "検索語句：", new { @class = "control-label" }) @Html.TextBox("keyword", new { ViewBag.Keyword }, new { @class = "form-control" }) <input type="submit" value="検索" 　class="btn btn-info" />
+                <br /><br /><p>合致件数：@ViewBag.Count</p>
+            }
+         </div> 
+     }
 
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    <table>
-                        <tr><td>【@Html.DisplayFor(modelItem => item.title)】 @Html.DisplayFor(modelItem => item.heading) </td></tr>
-                        <tr><td>@Html.DisplayFor(modelItem => item.digest)... @Html.ActionLink("全文を読む", "Details", new { id = item.id })  </td></tr>
-                    </table>
-                </td>
-            </tr>
-        }
+        <table class="table">
 
-    </table>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <table>
+                            <tr><td><h4>【@Html.DisplayFor(modelItem => item.title)】 @Html.DisplayFor(modelItem => item.heading)</h4></td></tr>
+                            <tr><td>@Html.DisplayFor(modelItem => item.digest)... @Html.ActionLink("全文を読む", "Details", new { id = item.id,keyword = ViewBag.Keyword })  </td></tr>
+                        </table>
+                    </td>
+                </tr>
+            }
+
+        </table>
 
     @*@Html.Partial("_SearchPartial",Model)*@
 }

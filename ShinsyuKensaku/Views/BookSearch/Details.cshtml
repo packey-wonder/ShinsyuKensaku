@@ -4,11 +4,11 @@
     ViewBag.Title = "Details";
 }
 
-<h2>全文</h2>
+<h2>検索語句：@ViewBag.Keyword</h2>
 
 <div>
     <p>
-        @Html.ActionLink("検索結果に戻る", "Index")
+        @Html.ActionLink("検索結果に戻る", "Index", new { keyword = ViewBag.Keyword })
     </p>
     <hr />
     <dl class="dl-horizontal">
@@ -37,16 +37,16 @@
 
         <dd>
             @Html.TextAreaFor(modelItem => item.body,
-           15,
-           120,
-              new { @readonly = "readonly"
-            }
-           )
+        15,
+        120,
+           new { @readonly = "readonly"
+           }
+        )
         </dd>
 
        }
     </dl>
 </div>
 <p>
-    @Html.ActionLink("検索結果に戻る", "Index")
+    @Html.ActionLink("検索結果に戻る", "Index", new { keyword = ViewBag.Keyword})
 </p>
